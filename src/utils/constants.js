@@ -13,6 +13,7 @@ const ERROR = 'error';
 const ACCESS_DENIED_MESSAGE = 'access denied, you are not logged in';
 const DISK_STORAGE = 'file';
 const MEMORY_STORAGE = 'memory';
+const JWT_COOKIE_KEY = 'jwt';
 
 
 module.exports = {
@@ -30,5 +31,6 @@ module.exports = {
     INVALID_REQUEST_ERROR,
     DISK_STORAGE,
     MEMORY_STORAGE,
-    FILE_UPLOAD_ERROR
+    FILE_UPLOAD_ERROR,
+    JWT_COOKIE_KEY
 };

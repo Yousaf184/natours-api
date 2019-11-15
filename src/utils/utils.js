@@ -95,8 +95,10 @@ const extractValidationErrors = (validationErrors, errorsArr) => {
 // checks for name of the error and then adds appropriate
 // error name and error message to 'errorResponse' object
 const errorHandler = (error, req, res, next) => {
-    console.log('inside express error handler');
-    console.log(error.name);
+    if (process.env.NODE_ENV === 'development') {
+        console.log('inside express error handler');
+        console.log(error.name);
+    }
 
     let statusCode = 400;
     const errorResponse = {

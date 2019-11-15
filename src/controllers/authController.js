@@ -7,6 +7,7 @@ const { successResponse, successResponseWithToken } = require('../utils/customRe
 const {
     INVALID_LOGIN_ERROR,
     PASSWORD_RESET_ERROR,
+    JWT_COOKIE_KEY
 } = require('../utils/constants');
 
 const signUp = async (req, res, next) => {
@@ -53,6 +54,27 @@ const login = async (req, res, next) => {
         successResponseWithToken(res, token, null);
 
     } catch(error) {
+        next(error);
+    }
+};
+
+const logout = async (req, res, next) => {
+    try {
+        const cookieOptions = {
+            expires: new Date(Date.now() + 2000),
+            httpOnly: true
+        };
+
+        // send cookie over HTTPS only if in production
+        if (process.env.NODE_ENV === 'production') {
+            cookieOptions.secure = true;
+        }
+
+        res.status(200)
+           .cookie(JWT_COOKIE_KEY, '123', cookieOptions)
+           .json(successResponse(null, 'logged out successfully'));
+
+    } catch (error) {
         next(error);
     }
 };
@@ -127,4 +149,5 @@ module.exports = {
     login,
     forgotPassword,
     resetPassword,
+    logout
 };

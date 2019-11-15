@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const requestRateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -34,6 +35,8 @@ app.use(xss());
 app.use(hpp());
 // limit number of requests from single IP address
 app.use('/api', requestRateLimiter);
+
+app.use(cookieParser());
 
 // serve static files (image files uploaded on server)
 app.use('/uploaded-images', express.static(path.join(__dirname, '..', 'uploaded-images')));

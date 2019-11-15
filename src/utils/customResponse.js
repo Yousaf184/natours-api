@@ -1,4 +1,4 @@
-const { SUCCESS } = require('./constants');
+const { SUCCESS, JWT_COOKIE_KEY } = require('./constants');
 
 /**
  * returns success response
@@ -37,6 +37,7 @@ const successResponseWithToken = async (res, jwtToken, successMsg) => {
     const response =  { status: SUCCESS, token: jwtToken };
     if (successMsg) response.message = successMsg;
 
+    // three days in milliseconds
     const threeDays = process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000;
     const cookieOptions = {
         expires: new Date(Date.now() + threeDays),  // cookie to expire in 3 days
@@ -49,7 +50,7 @@ const successResponseWithToken = async (res, jwtToken, successMsg) => {
     }
 
     res.status(200)
-       .cookie('jwt', jwtToken, cookieOptions)
+       .cookie(JWT_COOKIE_KEY, jwtToken, cookieOptions)
        .json(response);
 };
 
